@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caast Hub · Tous les services Caast</title>
+<meta name="description" content="Tous les services Caast en un clic : Faast, Spot!, Caast Admin, Restream, documentation, API et MCP.">
+<meta name="theme-color" content="#050509">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#050509;color:#F4F3F8;font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1240px;margin:0 auto;padding-left:32px;padding-right:32px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Header */
+.top{position:relative;overflow:hidden;border-bottom:1px solid #16171F;background-color:#06060B;background-image:radial-gradient(ellipse 30% 55% at 82% 55%,rgba(255,45,180,.22),transparent 70%),radial-gradient(ellipse 40% 65% at 68% 15%,rgba(137,0,255,.28),transparent 70%),radial-gradient(ellipse 35% 60% at 10% 110%,rgba(110,155,255,.12),transparent 70%),radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:100% 100%,100% 100%,100% 100%,22px 22px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;padding-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px;min-height:44px}
+.brand img{height:26px;width:auto;display:block}
+.hubtag{font-size:12px;font-weight:800;letter-spacing:.08em;padding:4px 8px;border-radius:6px;background:linear-gradient(100deg,#E0249F,#8A00FF)}
+.nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.toplink{font-size:14px;color:#A6A8B6;min-height:44px;display:flex;align-items:center}
+.toplink:hover{color:#F4F3F8}
+.btn{min-height:40px;padding:0 16px;border-radius:8px;background:#F4F3F8;color:#050509;font-weight:700;font-size:14px;display:flex;align-items:center;transition:background-color .15s,transform .15s}
+.btn:hover{background:#fff;transform:translateY(-1px)}
+.lang{display:flex;padding:3px;border-radius:9px;border:1px solid #2A2C3A;background:rgba(10,11,16,.6)}
+.lang button{min-width:40px;min-height:34px;border:0;border-radius:6px;background:transparent;color:#A6A8B6;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.lang button[aria-pressed="true"]{background:#F4F3F8;color:#050509}
+.lang button:hover:not([aria-pressed="true"]){color:#F4F3F8}
+.hero{display:flex;align-items:center;gap:40px;padding-top:8px;padding-bottom:36px}
+.intro{flex:1 1 560px;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+h1{margin:0;font-size:clamp(36px,5.2vw,66px);font-weight:800;letter-spacing:-.045em;line-height:1;text-wrap:balance}
+.grad{background-image:linear-gradient(100deg,#FF4FC3 0%,#C84BFF 50%,#8A00FF 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
+.count{margin:0;font-size:16px;color:#A6A8B6}
+.search{position:relative;display:flex;align-items:center;gap:10px;width:100%;max-width:520px;min-height:52px;padding:0 18px;border-radius:14px;background:rgba(18,20,28,.85);border:1px solid #2A2C3A;color:#8A8C9A;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:#C84BFF;box-shadow:0 0 0 4px rgba(200,75,255,.18)}
+.search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#F4F3F8;font:inherit;font-size:16px}
+.search input::placeholder{color:#7A7C8A}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #2A2C3A;background:rgba(10,11,16,.6);color:#C9CAD4;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
+.chip:hover{border-color:var(--g)}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--g)}
+.chip .n{font-size:12px;color:#7A7C8A;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--g);border-color:var(--g);color:#050509}
+.chip[aria-pressed="true"] .dot{background:#050509}
+.chip[aria-pressed="true"] .n{color:#050509}
+:focus-visible{outline:2px solid #C84BFF;outline-offset:3px}
+
+/* Orbit */
+.orbitwrap{position:relative;flex:0 0 420px;height:420px}
+.ring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.14)}
+.ring.r1{inset:32px}
+.ring.r2{inset:104px;border-style:solid;border-color:rgba(255,255,255,.07)}
+.orbit{position:absolute;inset:0;animation:spin 80s linear infinite}
+.sat{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateX(178px) rotate(calc(-1 * var(--a)))}
+.pill{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+.pill-in{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#13141D;border:1px solid #2A2C3A;font-size:13px;font-weight:700;color:#E7E7EE;white-space:nowrap;animation:spin 80s linear infinite reverse;transition:background-color .15s,color .15s,border-color .15s}
+.pill-in .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
+.pill:hover .pill-in{background:var(--g);border-color:var(--g);color:#050509}
+.pill:hover .pill-in .dot{background:#050509}
+.orbitwrap:hover .orbit,.orbitwrap:hover .pill-in{animation-play-state:paused}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{position:absolute;left:50%;top:50%;width:170px;height:170px;transform:translate(-50%,-50%)}
+.core .glow{position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,180,.45),rgba(137,0,255,.25) 45%,transparent 70%);filter:blur(10px)}
+.core .wave{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,79,195,.55);animation:wave 2.8s ease-out infinite}
+.core .wave.w2{animation-delay:1.4s}
+@keyframes wave{0%{transform:scale(.95);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.core img{position:relative;display:block;width:170px;height:auto;margin-top:26px;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.sticker{position:absolute;left:252px;top:112px;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:.1em;background:#FF3DB8;color:#050509;transform:rotate(8deg)}
+.sticker i{width:6px;height:6px;border-radius:50%;background:#050509}
+
+/* Groups & tiles */
+main{display:flex;flex-direction:column;gap:16px;padding-top:32px;padding-bottom:32px}
+.group{display:grid;grid-template-columns:40px minmax(0,1fr);gap:0 20px;padding:20px 20px 20px 12px;border-radius:24px;background:#0B0C12;border:1px solid #171822}
+.rail{display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0}
+.rail-label{margin:0;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12px;font-weight:800;letter-spacing:.22em;color:var(--g);white-space:nowrap;text-transform:uppercase}
+.rail-bar{flex:1;width:3px;min-height:40px;border-radius:3px;background:var(--g)}
+.gbody{display:flex;flex-direction:column;gap:14px;min-width:0}
+.gsub{margin:4px 0 0;font-size:14px;color:#8A8C9A}
+.tiles{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(var(--min),100%),1fr))}
+.tile{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:188px;padding:20px 22px 22px;border-radius:18px;background:#14161F;border:1px solid #20222D;color:#F4F3F8;transition:transform .2s,background-color .2s,border-color .2s}
+.tile .big{position:absolute;right:-6px;bottom:-34px;font-size:150px;font-weight:800;letter-spacing:-.06em;line-height:1;color:var(--g);opacity:.13;pointer-events:none;transition:opacity .2s,color .2s,transform .3s}
+.tile .head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tile .dom{font-size:15px;font-weight:600;color:#9A9CAA;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile .arrow{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid #2E303C;display:flex;align-items:center;justify-content:center;transition:transform .2s,background-color .2s,border-color .2s,color .2s}
+.tile .body{position:relative;display:flex;flex-direction:column;gap:8px}
+.tile .name{margin:0;display:flex;align-items:flex-end;min-height:2.1em;font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.tile .desc{margin:0;min-height:3em;font-size:15px;line-height:1.5;color:#A6A8B6;max-width:34ch}
+.tile:hover,.tile:focus-visible{transform:translateY(-3px);background:var(--g);border-color:var(--g);color:#050509;outline:none}
+.tile:hover .dom,.tile:hover .desc,.tile:focus-visible .dom,.tile:focus-visible .desc{color:#050509}
+.tile:hover .big,.tile:focus-visible .big{color:#050509;opacity:.12;transform:translateX(-10px)}
+.tile:hover .arrow,.tile:focus-visible .arrow{background:#050509;border-color:#050509;color:var(--g);transform:rotate(-45deg)}
+.tile.light{background:#F4F3F8;border-color:#F4F3F8;color:#050509}
+.tile.light .dom,.tile.light .desc{color:#3A3B46}
+.tile.light .big{color:#050509;opacity:.08}
+.tile.light .arrow{border-color:#050509}
+.empty{padding:56px 24px;border-radius:24px;border:1px dashed #262835;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+.empty p{margin:0;font-size:18px;font-weight:700}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:32px;padding-bottom:48px;font-size:13px;color:#8A8C9A}
+footer nav{display:flex;gap:20px}
+footer a:hover{color:#F4F3F8}
+
+@media (max-width:980px){.orbitwrap{display:none}}
+@media (max-width:760px){
+.wrap{padding-left:16px;padding-right:16px}
+.group{grid-template-columns:minmax(0,1fr);gap:14px;padding:16px}
+.rail{flex-direction:row;padding:0}
+.rail-label{writing-mode:horizontal-tb;transform:none}
+.rail-bar{height:3px;width:auto;min-height:0}
+.tile{min-height:170px}
+.toplink.site{display:none}
+}
+@media (prefers-reduced-motion:reduce){.orbit,.pill-in,.core .wave,.core img{animation:none}.tile,.tile .big,.tile .arrow,.chip,.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <header class="wrap bar">
+    <a class="brand" href="https://caast.tv" target="_blank" rel="noopener">
+      <img src="assets/caast-logo.png" alt="Caast" width="170" height="26">
+      <span class="hubtag">HUB</span>
+    </a>
+    <nav class="nav" aria-label="Menu">
+      <a class="toplink site" href="https://caast.tv" target="_blank" rel="noopener">caast.tv ↗</a>
+      <div class="lang" role="group" aria-label="Langue / Language">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn" href="https://caast.tv/demo" target="_blank" rel="noopener" data-i18n="demo">Réserver une démo</a>
+    </nav>
+  </header>
+
+  <div class="wrap hero">
+    <div class="intro">
+      <h1 id="title"></h1>
+      <p class="count" id="count"></p>
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="sr" data-i18n="searchLabel">Rechercher un service</span>
+        <input id="q" type="search" autocomplete="off">
+      </label>
+      <div class="chips" id="chips" role="group"></div>
+    </div>
+
+    <div class="orbitwrap" aria-hidden="true">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="core"><div class="glow"></div><div class="wave"></div><div class="wave w2"></div><img src="assets/caast-planet.png" alt="" width="170" height="119"></div>
+      <div class="orbit" id="orbit"></div>
+      <span class="sticker"><i></i>LIVE</span>
+    </div>
+  </div>
+</div>
+
+<main class="wrap" id="groups" aria-live="polite"></main>
+
+<footer class="wrap">
+  <span>Caast SAS · Paris</span>
+  <nav aria-label="Footer">
+    <a href="https://caast.tv" target="_blank" rel="noopener">caast.tv</a>
+    <a href="https://caast.tv/demo" target="_blank" rel="noopener" data-i18n="demo">Réserver une démo</a>
+  </nav>
+</footer>
+
+<script>
+/* =====================================================================
+   CONTENU DU HUB
+   - Ajouter un service : une ligne dans SERVICES (g = id de la rubrique).
+   - Ajouter une rubrique : une entrée dans GROUPS.
+   - Les textes sont en français (fr) et en anglais (en).
+   ===================================================================== */
+var GROUPS = [
+  { id: 'discover', color: '#6E9BFF', min: 300,
+    fr: { label: 'Découvrir', sub: 'Pour les marques qui découvrent Caast' },
+    en: { label: 'Discover', sub: 'For brands looking at Caast' } },
+  { id: 'run', color: '#9B87FF', min: 250,
+    fr: { label: 'Piloter un live', sub: 'Pour les équipes qui préparent et animent les lives' },
+    en: { label: 'Run a live', sub: 'For teams preparing and running lives' } },
+  { id: 'docs', color: '#EE7FCB', min: 300,
+    fr: { label: 'Docs', sub: 'Pour les développeurs et intégrateurs' },
+    en: { label: 'Docs', sub: 'For developers and integrators' } }
+];
+
+var SERVICES = [
+  { g: 'discover', domain: 'caast.tv', url: 'https://caast.tv',
+    fr: { name: 'Caast', short: 'caast.tv', desc: 'Site de Caast : ce que fait Caast, qui l’utilise.' },
+    en: { name: 'Caast', short: 'caast.tv', desc: 'Company website: what Caast does, who uses it.' } },
+  { g: 'discover', domain: 'spotlive.fr', url: 'https://spotlive.fr/',
+    fr: { name: 'Spot!', short: 'Spot!', desc: 'Annuaire public des lives de marques et des replays.' },
+    en: { name: 'Spot!', short: 'Spot!', desc: 'Public directory of brand lives and replays.' } },
+  { g: 'discover', domain: 'caast.tv/demo', url: 'https://caast.tv/demo', light: true,
+    fr: { name: 'Réserver une démo', short: 'Démo', desc: 'Planifier un appel avec l’équipe Caast.' },
+    en: { name: 'Book a demo', short: 'Demo', desc: 'Schedule a call with the Caast team.' } },
+  { g: 'run', domain: 'faast.tv', url: 'https://faast.tv/',
+    fr: { name: 'Faast', short: 'Faast', desc: 'Préparation du live : produits, conducteur, jeux, SMS.' },
+    en: { name: 'Faast', short: 'Faast', desc: 'Live prep: products, run sheet, prize draws, SMS.' } },
+  { g: 'run', domain: 'admin.caast.tv', url: 'https://admin.caast.tv',
+    fr: { name: 'Caast Admin', short: 'Admin', desc: 'Back-office : lives, produits, players et stats.' },
+    en: { name: 'Caast Admin', short: 'Admin', desc: 'Back office: lives, products, players and stats.' } },
+  { g: 'run', domain: 'restream.caast.tv', url: 'https://restream.caast.tv',
+    fr: { name: 'Caast Restream', short: 'Restream', desc: 'Diffuser un live sur plusieurs plateformes à la fois.' },
+    en: { name: 'Caast Restream', short: 'Restream', desc: 'Broadcast one live to several platforms at once.' } },
+  { g: 'run', domain: 'instagram.faast.tv', url: 'https://instagram.faast.tv/',
+    fr: { name: 'Caast pour Instagram', short: 'Instagram', desc: 'Animer vos lives Caast sur Instagram.' },
+    en: { name: 'Caast for Instagram', short: 'Instagram', desc: 'Run Caast lives on Instagram.' } },
+  { g: 'docs', domain: 'docs.caast.tv', url: 'https://docs.caast.tv',
+    fr: { name: 'Caast Library', short: 'Library', desc: 'Docs d’intégration du player et des vidéos Caast.' },
+    en: { name: 'Caast Library', short: 'Library', desc: 'Integration docs for the Caast player and videos.' } },
+  { g: 'docs', domain: 'docs.caast.tv/api', url: 'https://docs.caast.tv/api/',
+    fr: { name: 'Référence API', short: 'API', desc: 'Endpoints, paramètres et réponses de l’API.' },
+    en: { name: 'API Reference', short: 'API', desc: 'Endpoints, parameters and responses of the API.' } },
+  { g: 'docs', domain: 'mcp.caast.tv', url: 'https://mcp.caast.tv/',
+    fr: { name: 'Caast MCP', short: 'MCP', desc: 'Serveur MCP pour connecter Caast aux assistants IA.' },
+    en: { name: 'Caast MCP', short: 'MCP', desc: 'MCP server connecting Caast to AI assistants.' } }
+];
+
+var UI = {
+  fr: {
+    docTitle: 'Caast Hub · Tous les services Caast',
+    title: 'Tous les services Caast, <span class="grad">en un clic</span>',
+    count: function (n) { return n + ' services · sites, outils et docs'; },
+    searchLabel: 'Rechercher un service',
+    placeholder: 'Rechercher un service, ex. API, Instagram',
+    filters: 'Filtrer par profil',
+    all: 'Tous',
+    demo: 'Réserver une démo',
+    empty: function (q) { return 'Aucun service ne correspond à « ' + q + ' »'; },
+    reset: 'Afficher tous les services'
+  },
+  en: {
+    docTitle: 'Caast Hub · Every Caast service',
+    title: 'Every Caast service, <span class="grad">one click</span> away',
+    count: function (n) { return n + ' services · sites, tools and docs'; },
+    searchLabel: 'Search services',
+    placeholder: 'Search a service, e.g. API, Instagram',
+    filters: 'Filter by audience',
+    all: 'All',
+    demo: 'Book a demo',
+    empty: function (q) { return 'No service matches “' + q + '”'; },
+    reset: 'Show all services'
+  }
+};
+
+/* ===================================================================== */
+(function () {
+  var state = { lang: 'fr', filter: 'all', q: '' };
+  var arrow = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var colorOf = {};
+  GROUPS.forEach(function (g) { colorOf[g.id] = g.color; });
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+
+  // Initial language: ?lang=en, then saved choice, then French.
+  try {
+    var p = new URLSearchParams(location.search).get('lang');
+    var saved = localStorage.getItem('caast-hub-lang');
+    if (p === 'en' || p === 'fr') state.lang = p;
+    else if (saved === 'en' || saved === 'fr') state.lang = saved;
+  } catch (e) {}
+
+  var $ = function (id) { return document.getElementById(id); };
+  var input = $('q');
+
+  function renderStatic() {
+    var t = UI[state.lang];
+    document.documentElement.lang = state.lang;
+    document.title = t.docTitle;
+    $('title').innerHTML = t.title;
+    $('count').textContent = t.count(SERVICES.length);
+    input.placeholder = t.placeholder;
+    $('chips').setAttribute('aria-label', t.filters);
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t[el.getAttribute('data-i18n')]; });
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === state.lang));
+    });
+    var step = 360 / SERVICES.length;
+    $('orbit').innerHTML = SERVICES.map(function (s, i) {
+      return '<div class="sat" style="--a:' + Math.round(i * step - 90) + 'deg"><a class="pill" href="' + esc(s.url) + '" target="_blank" rel="noopener" tabindex="-1" style="--g:' + colorOf[s.g] + '"><span class="pill-in"><span class="dot"></span>' + esc(s[state.lang].short) + '</span></a></div>';
+    }).join('');
+  }
+
+  function renderChips() {
+    var t = UI[state.lang];
+    var list = [{ id: 'all', color: '#F4F3F8', label: t.all, count: SERVICES.length }].concat(GROUPS.map(function (g) {
+      return { id: g.id, color: g.color, label: g[state.lang].label, count: SERVICES.filter(function (s) { return s.g === g.id; }).length };
+    }));
+    $('chips').innerHTML = list.map(function (c) {
+      return '<button type="button" class="chip" data-filter="' + c.id + '" style="--g:' + c.color + '" aria-pressed="' + (state.filter === c.id) + '"><span class="dot"></span>' + esc(c.label) + '<span class="n">' + c.count + '</span></button>';
+    }).join('');
+  }
+
+  function renderGroups() {
+    var t = UI[state.lang];
+    var q = norm(state.q.trim());
+    var html = '';
+    GROUPS.forEach(function (g) {
+      if (state.filter !== 'all' && state.filter !== g.id) return;
+      var tiles = '';
+      SERVICES.forEach(function (s, i) {
+        if (s.g !== g.id) return;
+        var tx = s[state.lang];
+        if (q && norm(tx.name + ' ' + tx.desc + ' ' + s.domain + ' ' + s.en.name).indexOf(q) === -1) return;
+        tiles += '<a class="tile' + (s.light ? ' light' : '') + '" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
+          '<span class="big" aria-hidden="true">' + pad(i + 1) + '</span>' +
+          '<span class="head"><span class="dom">' + esc(s.domain) + '</span><span class="arrow">' + arrow + '</span></span>' +
+          '<span class="body"><span class="name">' + esc(tx.name) + '</span><span class="desc">' + esc(tx.desc) + '</span></span></a>';
+      });
+      if (!tiles) return;
+      var gt = g[state.lang];
+      html += '<section class="group" style="--g:' + g.color + '" aria-labelledby="g-' + g.id + '">' +
+        '<div class="rail"><h2 class="rail-label" id="g-' + g.id + '">' + esc(gt.label) + '</h2><span class="rail-bar"></span></div>' +
+        '<div class="gbody"><p class="gsub">' + esc(gt.sub) + '</p><div class="tiles" style="--min:' + g.min + 'px">' + tiles + '</div></div></section>';
+    });
+    if (!html) {
+      html = '<div class="empty"><p>' + esc(t.empty(state.q.trim())) + '</p><button type="button" class="chip" id="reset" style="--g:#9B87FF">' + esc(t.reset) + '</button></div>';
+    }
+    $('groups').innerHTML = html;
+  }
+
+  function renderAll() { renderStatic(); renderChips(); renderGroups(); }
+
+  document.querySelector('.lang').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-lang]');
+    if (!b) return;
+    state.lang = b.getAttribute('data-lang');
+    try { localStorage.setItem('caast-hub-lang', state.lang); } catch (err) {}
+    renderAll();
+  });
+  $('chips').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-filter]');
+    if (!b) return;
+    state.filter = b.getAttribute('data-filter');
+    renderChips(); renderGroups();
+  });
+  input.addEventListener('input', function () { state.q = input.value; renderGroups(); });
+  $('groups').addEventListener('click', function (e) {
+    if (e.target.id !== 'reset') return;
+    state.q = ''; state.filter = 'all'; input.value = '';
+    renderChips(); renderGroups(); input.focus();
+  });
+
+  renderAll();
+})();
+</script>
+<noscript><p class="wrap" style="color:#A6A8B6">Activez JavaScript pour afficher les services. · Enable JavaScript to see the services.</p></noscript>
+</body>
+</html>
