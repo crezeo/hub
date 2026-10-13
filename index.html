@@ -10,14 +10,14 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
 <style>
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#050509;color:#F4F3F8;font-family:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1240px;margin:0 auto;padding-left:32px;padding-right:32px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Header */
 .top{position:relative;overflow:hidden;border-bottom:1px solid #16171F;background-color:#06060B;background-image:radial-gradient(ellipse 30% 55% at 82% 55%,rgba(255,45,180,.22),transparent 70%),radial-gradient(ellipse 40% 65% at 68% 15%,rgba(137,0,255,.28),transparent 70%),radial-gradient(ellipse 35% 60% at 10% 110%,rgba(110,155,255,.12),transparent 70%),radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:100% 100%,100% 100%,100% 100%,22px 22px}
@@ -161,7 +161,8 @@ footer a:hover{color:#F4F3F8}
   </div>
 </div>
 
-<main class="wrap" id="groups" aria-live="polite"></main>
+<p class="sr" id="status" role="status"></p>
+<main class="wrap" id="groups"></main>
 
 <footer class="wrap">
   <span>Caast SAS · Paris</span>
@@ -234,7 +235,8 @@ var UI = {
     all: 'Tous',
     demo: 'Réserver une démo',
     empty: function (q) { return 'Aucun service ne correspond à « ' + q + ' »'; },
-    reset: 'Afficher tous les services'
+    reset: 'Afficher tous les services',
+    results: function (n) { return n + (n > 1 ? ' services affichés' : ' service affiché'); }
   },
   en: {
     docTitle: 'Caast Hub · Every Caast service',
@@ -246,7 +248,8 @@ var UI = {
     all: 'All',
     demo: 'Book a demo',
     empty: function (q) { return 'No service matches “' + q + '”'; },
-    reset: 'Show all services'
+    reset: 'Show all services',
+    results: function (n) { return n + (n === 1 ? ' service shown' : ' services shown'); }
   }
 };
 
@@ -263,7 +266,7 @@ var UI = {
     });
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
-  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
 
   // Initial language: ?lang=en, then saved choice, then French.
   try {
@@ -288,10 +291,16 @@ var UI = {
     document.querySelectorAll('.lang button').forEach(function (b) {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === state.lang));
     });
-    var step = 360 / SERVICES.length;
-    $('orbit').innerHTML = SERVICES.map(function (s, i) {
-      return '<div class="sat" style="--a:' + Math.round(i * step - 90) + 'deg"><a class="pill" href="' + esc(s.url) + '" target="_blank" rel="noopener" tabindex="-1" style="--g:' + colorOf[s.g] + '"><span class="pill-in"><span class="dot"></span>' + esc(s[state.lang].short) + '</span></a></div>';
-    }).join('');
+    // Build the satellites once, then only swap their labels: re-creating them
+    // would restart the pills' counter-rotation out of phase with the orbit.
+    var orbit = $('orbit');
+    if (!orbit.children.length) {
+      var step = 360 / SERVICES.length;
+      orbit.innerHTML = SERVICES.map(function (s, i) {
+        return '<div class="sat" style="--a:' + Math.round(i * step - 90) + 'deg"><a class="pill" href="' + esc(s.url) + '" target="_blank" rel="noopener" tabindex="-1" style="--g:' + colorOf[s.g] + '"><span class="pill-in"><span class="dot"></span><span class="pill-label"></span></span></a></div>';
+      }).join('');
+    }
+    orbit.querySelectorAll('.pill-label').forEach(function (el, i) { el.textContent = SERVICES[i][state.lang].short; });
   }
 
   function renderChips() {
@@ -307,14 +316,15 @@ var UI = {
   function renderGroups() {
     var t = UI[state.lang];
     var q = norm(state.q.trim());
-    var html = '';
+    var html = '', shown = 0;
     GROUPS.forEach(function (g) {
       if (state.filter !== 'all' && state.filter !== g.id) return;
       var tiles = '';
       SERVICES.forEach(function (s, i) {
         if (s.g !== g.id) return;
         var tx = s[state.lang];
-        if (q && norm(tx.name + ' ' + tx.desc + ' ' + s.domain + ' ' + s.en.name).indexOf(q) === -1) return;
+        if (q && norm([s.domain, s.fr.name, s.fr.desc, s.en.name, s.en.desc].join(' ')).indexOf(q) === -1) return;
+        shown++;
         tiles += '<a class="tile' + (s.light ? ' light' : '') + '" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
           '<span class="big" aria-hidden="true">' + pad(i + 1) + '</span>' +
           '<span class="head"><span class="dom">' + esc(s.domain) + '</span><span class="arrow">' + arrow + '</span></span>' +
@@ -330,6 +340,7 @@ var UI = {
       html = '<div class="empty"><p>' + esc(t.empty(state.q.trim())) + '</p><button type="button" class="chip" id="reset" style="--g:#9B87FF">' + esc(t.reset) + '</button></div>';
     }
     $('groups').innerHTML = html;
+    $('status').textContent = t.results(shown);
   }
 
   function renderAll() { renderStatic(); renderChips(); renderGroups(); }
@@ -338,14 +349,21 @@ var UI = {
     var b = e.target.closest('button[data-lang]');
     if (!b) return;
     state.lang = b.getAttribute('data-lang');
-    try { localStorage.setItem('caast-hub-lang', state.lang); } catch (err) {}
+    try {
+      localStorage.setItem('caast-hub-lang', state.lang);
+      var url = new URL(location.href);
+      if (url.searchParams.has('lang')) { url.searchParams.set('lang', state.lang); history.replaceState(null, '', url); }
+    } catch (err) {}
     renderAll();
   });
   $('chips').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-filter]');
     if (!b) return;
     state.filter = b.getAttribute('data-filter');
-    renderChips(); renderGroups();
+    $('chips').querySelectorAll('.chip').forEach(function (c) {
+      c.setAttribute('aria-pressed', String(c === b));
+    });
+    renderGroups();
   });
   input.addEventListener('input', function () { state.q = input.value; renderGroups(); });
   $('groups').addEventListener('click', function (e) {
