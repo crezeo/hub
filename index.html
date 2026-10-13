@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caast Hub · Tous les services Caast</title>
-<meta name="description" content="Tous les services Caast en un clic : Faast, Spot!, Caast Admin, Restream, documentation, API et MCP.">
+<meta name="description" content="Tous les services Caast en un clic : Faast, Spot!, Caast Admin, Restream, documentation, API et MCP pour les assistants IA.">
 <meta name="theme-color" content="#050509">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -56,12 +56,12 @@ h1{margin:0;font-size:clamp(36px,5.2vw,66px);font-weight:800;letter-spacing:-.04
 /* Orbit */
 .orbitwrap{position:relative;flex:0 0 420px;height:420px}
 .ring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.14)}
-.ring.r1{inset:32px}
+.ring.r1{inset:24px}
 .ring.r2{inset:104px;border-style:solid;border-color:rgba(255,255,255,.07)}
 .orbit{position:absolute;inset:0;animation:spin 80s linear infinite}
-.sat{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateX(178px) rotate(calc(-1 * var(--a)))}
+.sat{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateX(186px) rotate(calc(-1 * var(--a)))}
 .pill{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
-.pill-in{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:#13141D;border:1px solid #2A2C3A;font-size:13px;font-weight:700;color:#E7E7EE;white-space:nowrap;animation:spin 80s linear infinite reverse;transition:background-color .15s,color .15s,border-color .15s}
+.pill-in{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#13141D;border:1px solid #2A2C3A;font-size:12px;font-weight:700;color:#E7E7EE;white-space:nowrap;animation:spin 80s linear infinite reverse;transition:background-color .15s,color .15s,border-color .15s}
 .pill-in .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
 .pill:hover .pill-in{background:var(--g);border-color:var(--g);color:#050509}
 .pill:hover .pill-in .dot{background:#050509}
@@ -188,7 +188,10 @@ var GROUPS = [
     en: { label: 'Run a live', sub: 'For teams preparing and running lives' } },
   { id: 'docs', color: '#EE7FCB', min: 300,
     fr: { label: 'Docs', sub: 'Pour les développeurs et intégrateurs' },
-    en: { label: 'Docs', sub: 'For developers and integrators' } }
+    en: { label: 'Docs', sub: 'For developers and integrators' } },
+  { id: 'ai', color: '#5FD4C4', min: 300,
+    fr: { label: 'IA', sub: 'Pour connecter Caast et Faast aux assistants IA' },
+    en: { label: 'AI', sub: 'For connecting Caast and Faast to AI assistants' } }
 ];
 
 var SERVICES = [
@@ -207,7 +210,7 @@ var SERVICES = [
   { g: 'run', domain: 'admin.caast.tv', url: 'https://admin.caast.tv',
     fr: { name: 'Caast Admin', short: 'Admin', desc: 'Back-office : lives, produits, players et stats.' },
     en: { name: 'Caast Admin', short: 'Admin', desc: 'Back office: lives, products, players and stats.' } },
-  { g: 'run', domain: 'restream.caast.tv', url: 'https://restream.caast.tv',
+  { g: 'run', domain: 'restream.caast.tv', url: 'https://restream.caast.tv/go',
     fr: { name: 'Caast Restream', short: 'Restream', desc: 'Diffuser un live sur plusieurs plateformes à la fois.' },
     en: { name: 'Caast Restream', short: 'Restream', desc: 'Broadcast one live to several platforms at once.' } },
   { g: 'run', domain: 'instagram.faast.tv', url: 'https://instagram.faast.tv/',
@@ -219,9 +222,12 @@ var SERVICES = [
   { g: 'docs', domain: 'docs.caast.tv/api', url: 'https://docs.caast.tv/api/',
     fr: { name: 'Référence API', short: 'API', desc: 'Endpoints, paramètres et réponses de l’API.' },
     en: { name: 'API Reference', short: 'API', desc: 'Endpoints, parameters and responses of the API.' } },
-  { g: 'docs', domain: 'mcp.caast.tv', url: 'https://mcp.caast.tv/',
-    fr: { name: 'Caast MCP', short: 'MCP', desc: 'Serveur MCP pour connecter Caast aux assistants IA.' },
-    en: { name: 'Caast MCP', short: 'MCP', desc: 'MCP server connecting Caast to AI assistants.' } }
+  { g: 'ai', domain: 'mcp.caast.tv', url: 'https://mcp.caast.tv/',
+    fr: { name: 'Caast MCP', short: 'Caast MCP', desc: 'Serveur MCP pour connecter Caast aux assistants IA.' },
+    en: { name: 'Caast MCP', short: 'Caast MCP', desc: 'MCP server connecting Caast to AI assistants.' } },
+  { g: 'ai', domain: 'mcp.faast.tv', url: 'https://mcp.faast.tv/',
+    fr: { name: 'Faast MCP', short: 'Faast MCP', desc: 'Organiser un live Faast depuis votre assistant IA.' },
+    en: { name: 'Faast MCP', short: 'Faast MCP', desc: 'Organize a Faast live from your AI assistant.' } }
 ];
 
 var UI = {
@@ -230,7 +236,7 @@ var UI = {
     title: 'Tous les services Caast, <span class="grad">en un clic</span>',
     count: function (n) { return n + ' services · sites, outils et docs'; },
     searchLabel: 'Rechercher un service',
-    placeholder: 'Rechercher un service, ex. API, Instagram',
+    placeholder: 'Rechercher un service, ex. API, MCP',
     filters: 'Filtrer par profil',
     all: 'Tous',
     demo: 'Réserver une démo',
@@ -243,7 +249,7 @@ var UI = {
     title: 'Every Caast service, <span class="grad">one click</span> away',
     count: function (n) { return n + ' services · sites, tools and docs'; },
     searchLabel: 'Search services',
-    placeholder: 'Search a service, e.g. API, Instagram',
+    placeholder: 'Search a service, e.g. API, MCP',
     filters: 'Filter by audience',
     all: 'All',
     demo: 'Book a demo',
